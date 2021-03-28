@@ -1,0 +1,24 @@
+
+;" LCOPY makes a copy of a list, not just the pointer to
+   the LIST, ( !.l ) does not make a copy of the LIST "
+<DEFINE LCOPY (L) #DECL ((L VALUE) LIST) <LIST !.L>> 
+
+
+
+
+;" Concatenate two LISTs together. LCAT modifies the first 
+   LIST to contain the concatenation of the two LISTs, no
+   copying "
+<DEFINE LCAT (L1 L2 ;"CONCATIMATE L2 TO L1 RETURN .L1"
+	      "AUX" X (LEN1 <LENGTH .L1>) )
+	#DECL((L1 L2 VALUE X) LIST)
+	<PUTREST <REST .L1 <- .LEN1 1>> .L2>
+	.L1>
+
+
+;" Append something to the end of a LIST 
+   Modifies the original list so that .OBJ 
+   Is Appended to its end, no copying "
+<DEFINE LAPPEND (LST OBJ)                
+	#DECL ((VALUE LST) LIST (OBJ) ANY)    
+	<LCAT .LST <LIST .OBJ>>> 
